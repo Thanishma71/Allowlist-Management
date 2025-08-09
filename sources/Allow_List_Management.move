@@ -4,25 +4,25 @@ module thanishma_addr::AllowlistManager {
     use aptos_framework::timestamp;
     use std::vector;
     
-    /// Error codes
+   
     const E_ALLOWLIST_NOT_FOUND: u64 = 1;
     const E_ADDRESS_NOT_IN_ALLOWLIST: u64 = 2;
     const E_ALLOWLIST_EXPIRED: u64 = 3;
     const E_UNAUTHORIZED: u64 = 4;
     
-    /// Struct representing an allowlist entry with expiration
+   
     struct AllowlistEntry has store {
         address: address,
         expiration_time: u64,
     }
     
-    /// Struct representing the allowlist manager
+   
     struct AllowlistManager has store, key {
         owner: address,
         entries: vector<AllowlistEntry>,
     }
     
-    /// Function to initialize the allowlist manager
+    
     public fun initialize_allowlist(owner: &signer) {
         let owner_addr = signer::address_of(owner);
         let allowlist = AllowlistManager {
@@ -32,7 +32,7 @@ module thanishma_addr::AllowlistManager {
         move_to(owner, allowlist);
     }
     
-    /// Function to add an address to the allowlist with expiration time
+    
     public fun add_to_allowlist(
         owner: &signer, 
         target_address: address, 
@@ -41,7 +41,7 @@ module thanishma_addr::AllowlistManager {
         let owner_addr = signer::address_of(owner);
         let allowlist = borrow_global_mut<AllowlistManager>(owner_addr);
         
-        // Check if caller is the owner
+       
         assert!(allowlist.owner == owner_addr, E_UNAUTHORIZED);
         
         let new_entry = AllowlistEntry {
@@ -52,7 +52,7 @@ module thanishma_addr::AllowlistManager {
         vector::push_back(&mut allowlist.entries, new_entry);
     }
     
-    /// Function to check if an address is in the allowlist and not expired
+   
     public fun is_address_allowed(owner_addr: address, target_address: address): bool acquires AllowlistManager {
         if (!exists<AllowlistManager>(owner_addr)) {
             return false
@@ -73,4 +73,5 @@ module thanishma_addr::AllowlistManager {
         
         false
     }
+
 }
