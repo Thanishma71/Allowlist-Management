@@ -1,0 +1,15 @@
+[package]
+name = "Allow_List_Management"j
+version = "1.0.0"
+authors = []
+
+[addresses]
+thanishma_addr="0xc6dfa158f875f6ce124b745024eb5cbe900deb3f88fa1fe57954e6c9aa1b407a"
+[dev-addresses]
+
+[dependencies.AptosFramework]
+git = "https://github.com/aptos-labs/aptos-framework.git"
+rev = "mainnet"
+subdir = "aptos-framework"
+
+[dev-dependencies]
